@@ -2,8 +2,8 @@ const accountId = 123456789
 let accountEmail = "umar@goggle.com"
 var accountPassword = "123456789"
 accountCity = "kolkata"
-
-//accountId = 144545
+let accountState;
+//accountId = 144545 // not allowed because accountId is a constant variable
 
 
 accountEmail = "hc@google.com"
@@ -12,4 +12,4 @@ accountCity = "delhi"
 
 console.log(accountId);
 
-console.table({accountId, accountEmail, accountPassword, accountCity});
+console.table({accountId, accountEmail, accountPassword, accountCity, accountState});
