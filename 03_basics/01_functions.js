@@ -70,3 +70,15 @@ function returnSecondaValue(getArray){
 
 // console.log(returnSecondaValue(myNewArray));
 // console.log(returnSecondaValue([200, 500, 800 , 900]));
+
+
+let val1 = 8723
+let val2 = 5454864
+
+function addvalue(num1 , num2){
+    let total = num1 + num2
+    return total
+}
+
+console.log(addvalue(val1 , val2))
+console.log(addvalue(5454489, 8478454));

@@ -28,6 +28,20 @@ const chai = () => {
     
 }
 
+
+const addvalue = (num1, num2) => {
+    let total = num1 + num2
+    console.log(total);
+    
+    return total
+}
+
+// addvalue(584554, 689865)
+
+
+
+
+
 // chai()
 
 
@@ -45,7 +59,7 @@ const chai = () => {
 
 const addTwo = (num1, num2) => ({usename: "akib"})  //you need to wrap the oject for return
 
-console.log(addTwo(64545, 87848));
+// console.log(addTwo(64545, 87848));
 
 
 const myArray = [1, 4, 5, 8]
