@@ -16,13 +16,13 @@ const all_new_heros = [...marvel_heroes, ...dc_heroes]  //spread operator
 const another_array = [1, 2, 3, [4, 5, 6,], 7, [6, 7, [4, 5]]]
 
 const real_another_array = another_array.flat(Infinity)
-// console.log(real_another_array);
+console.log(real_another_array);
 
 
 // console.log(Array.isArray("akib"));
 // console.log(Array.from("akib"));
 
-// console.log(Array.from({name: "akib"})); //interesting interview que
+console.log(Array.from({name: "akib"})); //interesting interview que
 
 let score1 = 100
 let score2 = 200
