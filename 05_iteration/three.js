@@ -29,8 +29,12 @@ map.set('IN', "India")
 
 // console.log(map);
 
+for (const key in map) {
+    // console.log(key);    // we cannot do iteration loop in map using this method
+}
+
 for (const [key, value] of map) {
-    console.log(key, ':-', value);
+    // console.log(key, ':-', value);
     
 }
 
