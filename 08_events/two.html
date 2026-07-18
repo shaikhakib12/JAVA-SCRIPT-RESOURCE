@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>javascript resource</title>
+</head>
+<body>
+    <h1>hello javascript</h1>
+    <button id="stop">stop</button>
+</body>
+<script>
+    const SayMyName = function(){
+        console.log("sk akib");
+        
+    }
+
+    const AskName = function () {
+        document.querySelector('h1').innerHTML = "What is your name?"
+        
+    }
+    const changeMe = setTimeout(AskName, 2000);
+
+    // clearTimeout(changeMe)
+
+    document.querySelector('#stop').addEventListener('click', function(){
+        clearTimeout(changeMe);
+        console.log("event stopped")
+    })
+   
+</script>
+</html>
