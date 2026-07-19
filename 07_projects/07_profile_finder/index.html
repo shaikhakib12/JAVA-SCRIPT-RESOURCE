@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <title>github profile</title>
+</head>
+
+<body>
+    <div class="search-container">
+        <h1>GitHub Profile Finder</h1>
+        <div class="search-box">
+            <input type="text" id="username-input" placeholder="Enter github profile name" autocomplete="off">
+            <button type="button" id="search-btn" class="btn btn-success">Search</button>
+        </div>
+        <div id="error-msg" class="message"></div>
+    </div>
+
+    <!-- Profile Constainer Card -->
+
+    <div id="profile-card" class="card">
+        <div class="card-header">
+            <img src="" alt="avatar" class="avatar" id="avatar">
+            <div class="user-info">
+                <h2 id="name">User Name</h2>
+                <a href="#" id="username-link" target="_blank">@username</a>
+            </div>
+        </div>
+
+        <p id="bio">This is the user bio section.</p>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div id="repos">0</div>
+                <div class="stat-label">Repos</div>
+            </div>
+            <div class="stat-item">
+                <div id="followers" class="stat-value">0</div>
+                <div class="stat-label">Followers</div>
+            </div>
+            <div class="stat-item">
+                <div id="following" class="stat-value">0</div>
+                <div class="stat-label">Following</div>
+            </div>
+        </div>
+        <div class="meta-info">
+            <div id="location">📍Location : Not Available </div>
+            <div id="company">Company: Not Available</div>
+        </div>
+    </div>
+<script src="script.js"></script>
+</body>
+
+</html>

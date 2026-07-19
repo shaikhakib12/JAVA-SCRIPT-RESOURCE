@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Finder</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #f0f6fc;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            background-color: #161b22;
+            color: #f0f6fc;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: #58a6ff;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            background-color: #238636;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #2ea043;
+        }
+
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            display: none; /* Hidden by default until data loads */
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #30363d;
+            object-fit: cover;
+        }
+
+        .user-info h2 {
+            color: #f0f6fc;
+            font-size: 1.4rem;
+            line-height: 1.2;
+        }
+
+        .user-info a {
+            color: #58a6ff;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .user-info a:hover {
+            text-decoration: underline;
+        }
+
+        .bio {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #8b949e;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background-color: #0d1117;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #f0f6fc;
+            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #8b949e;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .meta-info {
+            font-size: 0.85rem;
+            color: #8b949e;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .message {
+            color: #f85149;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-container">
+        <h1>GitHub Profile Finder</h1>
+        <div class="search-box">
+            <input type="text" id="username-input" placeholder="Enter GitHub username (e.g., octocat)..." autocomplete="off">
+            <button id="search-btn">Search</button>
+        </div>
+        <div id="error-msg" class="message"></div>
+    </div>
+
+    <!-- Profile Card Container -->
+    <div id="profile-card" class="card">
+        <div class="card-header">
+            <img id="avatar" src="" alt="Avatar" class="avatar">
+            <div class="user-info">
+                <h2 id="name">User Name</h2>
+                <a id="username-link" href="#" target="_blank">@username</a>
+            </div>
+        </div>
+        
+        <p id="bio" class="bio">This is the user bio section.</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div id="repos" class="stat-value">0</div>
+                <div class="stat-label">Repos</div>
+            </div>
+            <div class="stat-item">
+                <div id="followers" class="stat-value">0</div>
+                <div class="stat-label">Followers</div>
+            </div>
+            <div class="stat-item">
+                <div id="following" class="stat-value">0</div>
+                <div class="stat-label">Following</div>
+            </div>
+        </div>
+
+        <div class="meta-info">
+            <div id="location">📍 Location: Not Available</div>
+            <div id="company">🏢 Company: Not Available</div>
+        </div>
+    </div>
+
+    <script>
+        const searchBtn = document.getElementById('search-btn');
+        const usernameInput = document.getElementById('username-input');
+        const profileCard = document.getElementById('profile-card');
+        const errorMsg = document.getElementById('error-msg');
+
+        // Event Listeners
+        searchBtn.addEventListener('click', fetchUserProfile);
+        usernameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                fetchUserProfile();
+            }
+        });
+
+        async function fetchUserProfile() {
+            const username = usernameInput.value.trim();
+            
+            if (!username) {
+                showError('Please enter a username');
+                return;
+            }
+
+            try {
+                // Clear previous errors and hide card during fetch
+                errorMsg.style.display = 'none';
+                
+                const response = await fetch(`https://api.github.com/users/${username}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error('User not found');
+                    } else {
+                        throw new Error('Something went wrong. Try again.');
+                    }
+                }
+
+                const data = await response.json();
+                updateProfileCard(data);
+                
+            } catch (error) {
+                showError(error.message);
+                profileCard.style.display = 'none';
+            }
+        }
+
+        function updateProfileCard(user) {
+            // Update Text & Images
+            document.getElementById('avatar').src = user.avatar_url;
+            document.getElementById('name').textContent = user.name || user.login;
+            
+            const usernameLink = document.getElementById('username-link');
+            usernameLink.textContent = `@${user.login}`;
+            usernameLink.href = user.html_url;
+            
+            document.getElementById('bio').textContent = user.bio || 'No bio available for this profile.';
+            document.getElementById('repos').textContent = user.public_repos;
+            document.getElementById('followers').textContent = user.followers;
+            document.getElementById('following').textContent = user.following;
+            
+            // Meta information fallbacks
+            document.getElementById('location').textContent = user.location ? `📍 ${user.location}` : '📍 Location: Not Available';
+            document.getElementById('company').textContent = user.company ? `🏢 ${user.company}` : '🏢 Company: Not Available';
+            
+            // Reveal the card
+            profileCard.style.display = 'block';
+        }
+
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
